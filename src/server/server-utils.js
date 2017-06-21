@@ -151,13 +151,17 @@ var isSocketUuid = function(name) {
     return name[0] === '_';
 };
 
+const fs = require('fs');
+const path = require('path');
+const EMPTY_ROLE = fs.readFileSync(path.join(__dirname, 'empty.xml'), 'utf8');
 var getEmptyRole = function(name) {
+    const media = '<media></media>';
     return {
         ProjectName: name,
-        SourceCode: '',
-        SourceSize: 0,
-        Media: '',
-        MediaSize: 0
+        SourceCode: EMPTY_ROLE,
+        SourceSize: EMPTY_ROLE.length,
+        Media: media,
+        MediaSize: media.length
     };
 };
 
