@@ -55,6 +55,7 @@ let htmlSearchHandler = (html, self) => {
     .done(()=>{
         results = results.map(res => {
             britishmuseum._logger.trace(res);
+            if(!(res.obj && res.image)) return null;
             return {
                 id: res.obj.substr(res.obj.lastIndexOf('/') + 1),
                 image: res.image.match(/AN(\d{6,10})/)[1]
