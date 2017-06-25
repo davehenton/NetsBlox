@@ -223,7 +223,8 @@ RoomMorph.prototype.drawNew = function() {
     this.image = newCanvas(this.extent());
 
     // Draw the roles
-    roles = Object.keys(this.roles || this.getDefaultRoles());
+    this.roles = this.roles || this.getDefaultRoles();
+    roles = Object.keys(this.roles);
     len = roles.length;
 
     for (i = 0; i < roles.length; i++) {
