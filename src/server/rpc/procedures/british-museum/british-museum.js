@@ -11,6 +11,7 @@ PREFIX fts: <http://www.ontotext.com/owlim/fts#>
 PREFIX btm: <http://collection.britishmuseum.org/id/ontology/>
 PREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#>`;
 
+const DEFAULT_LIMIT = 5;
 
 // parser used for when calling the json endPoint
 let searchParser = resp => {
@@ -71,10 +72,9 @@ let htmlSearchHandler = (html, self) => {
 
 
 
-britishmuseum.search = function(label, type, material, limit) {
+britishmuseum._search = function(label, type, material, limit) {
     if (!(label || type || material)) return 'Please pass in a query';
-    limit = limit || 10;
-
+    limit = limit || DEFAULT_LIMIT;
     let baseQ = [
         `SELECT DISTINCT (SAMPLE(?object) AS ?object) ?img
         {
@@ -120,7 +120,7 @@ britishmuseum.search = function(label, type, material, limit) {
 };
 
 britishmuseum.searchByLabel = function(label, limit){
-    limit = limit || 10;
+    limit = limit || DEFAULT_LIMIT;
 
     let simpleLabelQ = `
     SELECT DISTINCT (SAMPLE(?object) AS ?object) ?img
@@ -144,7 +144,7 @@ britishmuseum.searchByLabel = function(label, limit){
 
 
 britishmuseum.searchByType = function(type, limit){
-    limit = limit || 10;
+    limit = limit || DEFAULT_LIMIT;
 
     let simpleTypeQ = `
     SELECT DISTINCT (SAMPLE(?object) AS ?object) ?img
@@ -172,7 +172,7 @@ britishmuseum.searchByType = function(type, limit){
 
 
 britishmuseum.searchByMaterial = function(material, limit){
-    limit = limit || 10;
+    limit = limit || DEFAULT_LIMIT;
 
     let simpleMaterialQ = `
     SELECT DISTINCT (SAMPLE(?object) AS ?object) ?img
@@ -247,7 +247,7 @@ britishmuseum.getImage = function getImage(imageId, maxWidth, maxHeight) {
     this._sendImage({
         baseUrl: 'http://www.britishmuseum.org/collectionimages/',
         queryString: `AN${imageId.substr(0,5)}/AN${imageId}_001_l.jpg?maxwidth=${maxWidth}&maxheight=${maxHeight}`,
-        cache: false
+        cache: true
     });
 
     return null;
