@@ -87,7 +87,7 @@ var refreshCookie = function(res, cookie) {
     var token = jwt.sign(cookie, sessionSecret),
         options = {
             domain: '.netsblox.org',
-            httpOnly: true
+            httpOnly: false
         },
         date;
 
